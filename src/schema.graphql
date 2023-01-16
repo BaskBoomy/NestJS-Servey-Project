@@ -2,6 +2,31 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Survey {
+  id: Int!
+  title: String!
+  description: String!
+}
+
 type Query {
   index: String!
+  surveys: [Survey!]!
+  surveyById(serveyId: Int!): Survey!
+}
+
+type Mutation {
+  deleteSurvey(serveyId: Int!): String!
+  addSurvey(addSurveyArgs: AddSurveyArgs!): String!
+  updateSurvey(updateSurveyArgs: UpdateSurveyArgs!): String!
+}
+
+input AddSurveyArgs {
+  title: String!
+  description: String!
+}
+
+input UpdateSurveyArgs {
+  id: Int!
+  title: String!
+  description: String!
 }

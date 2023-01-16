@@ -1,3 +1,4 @@
+import { SurveyModule } from './survey/survey.module';
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -24,7 +25,8 @@ import { AppResolver } from './app.resolver';
       database: 'survey_db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize:true,
-    })
+    }),
+    SurveyModule
   ],
   controllers: [],
   providers: [AppResolver],
