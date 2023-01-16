@@ -6,18 +6,30 @@ type Survey {
   id: Int!
   title: String!
   description: String!
+  questions: [Question!]!
+}
+
+type Question {
+  id: Int!
+  question: String!
+  survey: Survey!
 }
 
 type Query {
   index: String!
   surveys: [Survey!]!
   surveyById(serveyId: Int!): Survey!
+  Questions: [Question!]!
+  QuestionById(serveyId: Int!): Question!
 }
 
 type Mutation {
   deleteSurvey(serveyId: Int!): String!
   addSurvey(addSurveyArgs: AddSurveyArgs!): String!
   updateSurvey(updateSurveyArgs: UpdateSurveyArgs!): String!
+  deleteQuestion(serveyId: Int!): String!
+  addQuestion(addQuestionArgs: AddQuestionArgs!): String!
+  updateQuestion(updateQuestionArgs: UpdateQuestionArgs!): String!
 }
 
 input AddSurveyArgs {
@@ -29,4 +41,14 @@ input UpdateSurveyArgs {
   id: Int!
   title: String!
   description: String!
+}
+
+input AddQuestionArgs {
+  question: String!
+  surveyId: Int!
+}
+
+input UpdateQuestionArgs {
+  id: Int!
+  question: String!
 }

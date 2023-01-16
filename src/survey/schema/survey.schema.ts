@@ -1,5 +1,6 @@
+import { QuestionEntity } from './../../question/entity/question.entity';
 import { Field, Int, ObjectType } from "@nestjs/graphql";
-
+import { Question } from 'src/question/schema/question.schema';
 @ObjectType()
 export class Survey{
     @Field((type)=> Int)
@@ -10,4 +11,7 @@ export class Survey{
 
     @Field()
     description: string;
+
+    @Field(()=> [Question])
+    questions: Question[];
 }

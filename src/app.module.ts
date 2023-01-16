@@ -1,3 +1,5 @@
+import { ConfigureModule } from './configure/configure.module';
+import { QuestionModeul } from './question/question.module';
 import { SurveyModule } from './survey/survey.module';
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -8,6 +10,7 @@ import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
+    ConfigureModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       playground: true,
@@ -26,7 +29,8 @@ import { AppResolver } from './app.resolver';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize:true,
     }),
-    SurveyModule
+    SurveyModule,
+    QuestionModeul
   ],
   controllers: [],
   providers: [AppResolver],
