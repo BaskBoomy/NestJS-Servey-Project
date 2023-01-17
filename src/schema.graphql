@@ -13,23 +13,57 @@ type Question {
   id: Int!
   question: String!
   survey: Survey!
+  answers: [Answer!]!
+}
+
+type Answer {
+  id: Int!
+  answer: String!
+  score: Int!
+  question: Question!
+}
+
+type User {
+  id: Int!
+  name: String!
+  phoneNumber: String!
+}
+
+type UserResultAnswers {
+  question: Question!
+  answer: Answer!
+}
+
+type UserAnswerResult {
+  user: User!
+  survey: Survey!
+  answers: [UserResultAnswers!]!
+  totalScore: Int!
 }
 
 type Query {
   index: String!
   surveys: [Survey!]!
-  surveyById(serveyId: Int!): Survey!
+  surveyById(surveyId: Int!): Survey!
   Questions: [Question!]!
-  QuestionById(serveyId: Int!): Question!
+  QuestionById(surveyId: Int!): Question!
+  Answers: [Answer!]!
+  AnswerById(answerId: Int!): Answer!
+  UserAnswers(userId: Int!, surveyId: Int!): UserAnswerResult!
 }
 
 type Mutation {
-  deleteSurvey(serveyId: Int!): String!
+  deleteSurvey(surveyId: Int!): String!
   addSurvey(addSurveyArgs: AddSurveyArgs!): String!
   updateSurvey(updateSurveyArgs: UpdateSurveyArgs!): String!
-  deleteQuestion(serveyId: Int!): String!
+  deleteQuestion(surveyId: Int!): String!
   addQuestion(addQuestionArgs: AddQuestionArgs!): String!
+  addQuestionWithAnswers(addQuestionWithAnsersArgs: AddQuestionWithAnswers!): String!
   updateQuestion(updateQuestionArgs: UpdateQuestionArgs!): String!
+  deleteAnswer(answerId: Int!): String!
+  addAnswer(addAnswerArgs: AddAnswerArgs!): String!
+  updateAnswer(updateAnswerArgs: UpdateAnswerArgs!): String!
+  addUserAnswer(addUserAnswerArgs: AddUserAnswerArgs!): String!
 }
 
 input AddSurveyArgs {
@@ -48,7 +82,36 @@ input AddQuestionArgs {
   surveyId: Int!
 }
 
+input AddQuestionWithAnswers {
+  surveyId: Int!
+  question: String!
+  answers: [AddAnswerArgs!]!
+}
+
+input AddAnswerArgs {
+  answer: String!
+  score: Int!
+  questionId: Int
+}
+
 input UpdateQuestionArgs {
   id: Int!
   question: String!
+}
+
+input UpdateAnswerArgs {
+  id: Int!
+  answer: String!
+  score: Int!
+}
+
+input AddUserAnswerArgs {
+  userId: Int!
+  surveyId: Int!
+  answers: [UserAnswers!]!
+}
+
+input UserAnswers {
+  questionId: Int!
+  answerId: Int!
 }

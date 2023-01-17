@@ -3,6 +3,7 @@ import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { AddQuestionArgs } from "./args/addQuestion.args";
 import { QuestionService } from "./question.service";
 import { Question } from "./schema/question.schema";
+import { AddQuestionWithAnswers } from './args/addQuestionWithAnswer.args';
 
 @Resolver(()=> Question)
 export class QuestionResolver{
@@ -14,18 +15,23 @@ export class QuestionResolver{
     }
     
     @Query((returns => Question), {name: 'QuestionById'})
-    getQuestionById(@Args({name:'serveyId', type:()=>Int}) id:number){
+    getQuestionById(@Args({name:'surveyId', type:()=>Int}) id:number){
         return this.questionService.findQuestionById(id);
     }
 
     @Mutation((returns => String), {name: 'deleteQuestion'})
-    deleteQuestion(@Args({name:'serveyId', type:()=>Int}) id:number){
+    deleteQuestion(@Args({name:'surveyId', type:()=>Int}) id:number){
         return this.questionService.deleteQuestion(id);
     }
 
     @Mutation((returns => String), {name: 'addQuestion'})
-    addQuestion(@Args("addQuestionArgs") Question: AddQuestionArgs){
-        return this.questionService.addQuestion(Question);
+    addQuestion(@Args("addQuestionArgs") question: AddQuestionArgs){
+        return this.questionService.addQuestion(question);
+    }
+
+    @Mutation((returns => String), {name: 'addQuestionWithAnswers'})
+    addQuestionWithAnswers(@Args("addQuestionWithAnsersArgs") questionWithAnswers: AddQuestionWithAnswers){
+        return this.questionService.addQuestionWithAnswers(questionWithAnswers);
     }
 
     @Mutation((returns => String), {name: 'updateQuestion'})

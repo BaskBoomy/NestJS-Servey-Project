@@ -1,5 +1,6 @@
+import { AnswerModule } from './answer/answer.module';
 import { ConfigureModule } from './configure/configure.module';
-import { QuestionModeul } from './question/question.module';
+import { QuestionModule } from './question/question.module';
 import { SurveyModule } from './survey/survey.module';
 import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -7,6 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppResolver } from './app.resolver';
+import { UserAnswerModule } from './user/answer/userAnswer.module';
 
 @Module({
   imports: [
@@ -30,7 +32,9 @@ import { AppResolver } from './app.resolver';
       synchronize:true,
     }),
     SurveyModule,
-    QuestionModeul
+    QuestionModule,
+    AnswerModule,
+    UserAnswerModule
   ],
   controllers: [],
   providers: [AppResolver],

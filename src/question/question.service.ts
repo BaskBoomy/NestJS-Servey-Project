@@ -1,3 +1,4 @@
+import { AnswerEntity } from 'src/answer/entity/answer.entity';
 import { SurveyEntity } from './../survey/entity/survey.entity';
 import { QuestionEntity } from './entity/question.entity';
 import { Injectable } from '@nestjs/common';
@@ -5,18 +6,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AddQuestionArgs } from './args/addQuestion.args';
 import { UpdateQuestionArgs } from './args/updateQuestion.args';
+import { AddQuestionWithAnswers } from './args/addQuestionWithAnswer.args';
 
 
 @Injectable()
 export class QuestionService{
     constructor(
         @InjectRepository(QuestionEntity) public readonly questionRepo : Repository<QuestionEntity>,
-        @InjectRepository(SurveyEntity) public readonly surveyRepo : Repository<SurveyEntity>){}
+        @InjectRepository(SurveyEntity) public readonly surveyRepo : Repository<SurveyEntity>,
+        @InjectRepository(AnswerEntity) public readonly answerRepo : Repository<AnswerEntity>){}
 
     async findAllQuestion() : Promise<QuestionEntity[]>{
         try{
             let questions = await this.questionRepo.find({
-                relations:{survey: true}
+                relations:["survey","answers"],
             });
             return questions;
         }catch(e){
@@ -28,7 +31,7 @@ export class QuestionService{
         try{
             let question = await this.questionRepo.findOne({
                 where:{id:id},
-                relations:{survey:true}
+                relations:["survey","answers"],
             });
             if(!question){
                 throw new Error('존재하지 않은 id입니다.');
@@ -69,6 +72,36 @@ export class QuestionService{
         }
     }
 
+    async addQuestionWithAnswers(addQuestionWithAnswer: AddQuestionWithAnswers): Promise<String>{
+        try{
+            let survey = await this.surveyRepo.findOne({where:{id:addQuestionWithAnswer.surveyId}});
+            if(!survey){
+                throw new Error("존재하지 않은 설문지id 입니다.");
+            }
+            
+            let question = new QuestionEntity();
+            question.question = addQuestionWithAnswer.question;
+            question.survey = survey;
+            
+            const inserted = await this.questionRepo.save(question);
+            if(!inserted){
+                throw new Error('질문이 등록되지 않았습니다.');
+            }
+
+            let answers : AnswerEntity[] = addQuestionWithAnswer.answers.map(x=>{
+                let item = new AnswerEntity();
+                item.answer = x.answer;
+                item.score = x.score;
+                item.questionId = inserted.id;
+                return item;
+            })
+            await this.answerRepo.save(answers);
+            return "질문이 등록되었습니다.";
+        }catch(e){
+            throw e;
+        }
+    }
+
     async upadteQuestion(updateQuestionArgs: UpdateQuestionArgs) : Promise<String>{
         try{
             let question = await this.questionRepo.findOne({where:{id:updateQuestionArgs.id}});
@@ -77,7 +110,7 @@ export class QuestionService{
             }
             question.question = updateQuestionArgs.question;
 
-            await this.questionRepo.save(question);
+            await this.questionRepo.update({id:updateQuestionArgs.id},question);
             return "설문지가 수정 되었습니다.";
         }catch(e){
             throw e;

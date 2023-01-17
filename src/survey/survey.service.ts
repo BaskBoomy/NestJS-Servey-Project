@@ -12,9 +12,7 @@ export class SurveyService{
     async findAllSurvey() : Promise<SurveyEntity[]>{
         try{
             let surveys = await this.surveyRepo.find({
-                relations:{
-                    questions: true,
-                }});
+                relations:['questions','questions.answers']});
             return surveys;
         }catch(e){
             throw e;
@@ -25,9 +23,7 @@ export class SurveyService{
         try{
             let survey = await this.surveyRepo.findOne({
                 where:{id:id},
-                relations:{
-                    questions: true,
-                }});
+                relations:['questions','questions.answers']});
             if(!survey){
                 throw new Error('존재하지 않은 id입니다.');
             }
@@ -72,7 +68,7 @@ export class SurveyService{
             survey.title = updateSurveyArgs.title;
             survey.description = updateSurveyArgs.description;
             
-            await this.surveyRepo.save(survey);
+            await this.surveyRepo.update({id:updateSurveyArgs.id},survey);
             return "설문지가 수정 되었습니다.";
         }catch(e){
             throw e;

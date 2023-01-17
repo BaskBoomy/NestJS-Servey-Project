@@ -14,12 +14,12 @@ export class SurveyResolver{
     }
     
     @Query((returns => Survey), {name: 'surveyById'})
-    getSurveyById(@Args({name:'serveyId', type:()=>Int}) id:number){
+    getSurveyById(@Args({name:'surveyId', type:()=>Int}) id:number){
         return this.surveyService.findSurveyById(id);
     }
 
     @Mutation((returns => String), {name: 'deleteSurvey'})
-    deleteSurvey(@Args({name:'serveyId', type:()=>Int}) id:number){
+    deleteSurvey(@Args({name:'surveyId', type:()=>Int}) id:number){
         return this.surveyService.deleteSurvey(id);
     }
 
