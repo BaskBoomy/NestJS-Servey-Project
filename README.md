@@ -17,19 +17,13 @@
 - 해당 설문지에 답안을 포함한 문항 추가
 - 설문지 제출 후, 설문지와 사용자가 체크한 답안과 총점 확인 가능
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Built With
 
 <img src="https://img.shields.io/badge/Nest.js-red?style=flat&logo=Nest.js&logoColor=white"/> <img src="https://img.shields.io/badge/TypeScript-blue?style=flat&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/typeorm-9cf?style=flat&logo=typeorm&logoColor=white"/> <img src="https://img.shields.io/badge/Graphql-pink?style=flat&logo=graphql&logoColor=white"/> <img src="https://img.shields.io/badge/postgresql-blue?style=flat&logo=postgresql&logoColor=white"/>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Table Design
 
-![survey.diagram](C:\Users\ADMIN\Desktop\survey.diagram.PNG)
-
-
+![survey diagram](https://user-images.githubusercontent.com/57517612/213120082-08bd1fb5-abb2-44f6-8535-b7b602559a2c.PNG)
 
 ## Getting Started
 
@@ -64,8 +58,6 @@
    DB_PASSWORD=
    DB_NAME=
    ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Usage Of APIS
 
@@ -288,5 +280,3 @@
 최종혁 - [Notion](https://www.notion.so/jonghyeok-choi/5ca12bf9fb134fa5a5a90a51526bbde0)  [E-mail](whdgurtpqms@naver.com)
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
