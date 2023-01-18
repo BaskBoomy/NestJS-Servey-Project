@@ -34,7 +34,9 @@
 
 1. [postgresql 설치](https://www.postgresql.org/download/)
 
-2. npm (version >= 8.19.2)
+2. [nodejs(version >= 18.12.1) 설치](https://nodejs.org/ko/download/)
+
+3. npm (version >= 8.19.2)
 
    ```sh
    npm install npm@latest -g
