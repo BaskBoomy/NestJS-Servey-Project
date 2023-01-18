@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AddQuestionArgs } from './args/addQuestion.args';
 import { UpdateQuestionArgs } from './args/updateQuestion.args';
-import { AddQuestionsWithAnswers } from './args/addQuestionWithAnswer.args';
+import { AddQuestionsWithAnswers } from './args/addQuestionsWithAnswer.args';
 import { NotFoundException } from '@nestjs/common/exceptions';
 
 
