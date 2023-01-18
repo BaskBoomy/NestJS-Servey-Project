@@ -1,4 +1,4 @@
-import { Field, InputType, Int } from "@nestjs/graphql";
+import { createUnionType, Field, InputType, Int } from "@nestjs/graphql";
 
 @InputType()
 class UserAnswers{
@@ -18,5 +18,5 @@ export class AddUserAnswerArgs{
     surveyId: number;
 
     @Field(()=> [UserAnswers])
-    answers: [UserAnswers];
+    answers: UserAnswers[];
 }

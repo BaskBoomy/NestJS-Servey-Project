@@ -10,7 +10,9 @@ import { Survey } from 'src/survey/schema/survey.schema';
 import { UserAnswerResult, UserResultAnswers } from './schema/userAnswerResult.schema';
 import { QuestionEntity } from 'src/question/entity/question.entity';
 import { AnswerEntity } from 'src/answer/entity/answer.entity';
-
+import { NotFoundException } from '@nestjs/common/exceptions';
+import { Answer } from 'src/answer/schema/answer.schema';
+import {inspect} from 'util';
 @Injectable()
 export class UserAnswerService{
     constructor(
@@ -26,26 +28,47 @@ export class UserAnswerService{
                     userId:userId,
                     surveyId:surveyId
                 },
-                relations:['user','survey','survey.questions','question','answer']
+                relations:['user','survey','survey.questions','question','question.answers','answer']
             });
 
             if(!userAnswer){
-                throw new Error('존재하지 않은 정보입니다.');
+                throw new NotFoundException('존재하지 않은 정보입니다.');
+            }
+            if(!userAnswer[0].user){
+                throw new NotFoundException('존재하지 않은 User 입니다.');
+            }
+            if(!userAnswer[0].survey){
+                throw new NotFoundException('존재하지 않은 Survey 입니다.');
             }
             
             let userSurveyResult = new UserAnswerResult();
             userSurveyResult.user = userAnswer[0].user as User;
             userSurveyResult.survey = userAnswer[0].survey as Survey;
-            userSurveyResult.answers = userAnswer.map(x=>{
-                console.log(x.question);
+            userSurveyResult.answers = [];
+            userAnswer.forEach(x=>{
                 let item = new UserResultAnswers();
-                item.question = x.question as QuestionEntity;
-                item.answer = x.answer as AnswerEntity;
-                return item;
-            });
-            userSurveyResult.totalScore = 
-            userSurveyResult.answers.reduce((acc,cur)=>acc+cur.answer.score,0);
+                item.question = x.question;
+                //사용자의 답안은 모두 배열로 반환한다.
+                item.userAnswer = new Array<Answer>;
+                item.userAnswer.push(x.answer);
 
+                //중복응답의 질문일 경우
+                let dupIndex = userSurveyResult.answers.findIndex(a=>a.question.id==item.question.id);
+                if(dupIndex>-1) {
+                    userSurveyResult.answers[dupIndex].userAnswer.push(item.userAnswer[0]);
+                }else{
+                    userSurveyResult.answers.push(item);
+                }
+            });
+
+            //답변의 총점 계산
+            userSurveyResult.totalScore = 
+                userSurveyResult.answers.reduce((acc,cur)=>acc+cur.userAnswer.reduce((a,b)=>a+b.score,0),0);
+
+            //createdAt, updatedAt
+            userSurveyResult.createdAt = userAnswer[0].createdAt;
+            userSurveyResult.updatedAt = userAnswer[0].updatedAt;
+            
             return userSurveyResult;
         }catch(e){
             throw e;
@@ -71,8 +94,8 @@ export class UserAnswerService{
                 let item = new UserAnswerEntity();
                 item.userId = userId;
                 item.surveyId = surveyId;
-                item.question = answer.questionId;
-                item.answer = answer.answerId;
+                item.questionId = answer.questionId;
+                item.answerId = answer.answerId;
                 return item;
             });
             console.log(userAnswer);

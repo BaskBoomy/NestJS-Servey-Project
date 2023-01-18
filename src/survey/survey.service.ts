@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SurveyEntity } from './entity/survey.entity';
+import { NotFoundException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class SurveyService{
@@ -25,7 +26,7 @@ export class SurveyService{
                 where:{id:id},
                 relations:['questions','questions.answers']});
             if(!survey){
-                throw new Error('존재하지 않은 id입니다.');
+                throw new NotFoundException('존재하지 않은 id입니다.');
             }
             return survey;
         }catch(e){
@@ -37,7 +38,7 @@ export class SurveyService{
         try{
             let survey = await this.surveyRepo.findOne({where:{id:id}});
             if(!survey){
-                throw new Error('존재하지 않은 id입니다.');
+                throw new NotFoundException('존재하지 않은 id입니다.');
             }
             await this.surveyRepo.delete(id);
             return "해당 설문지가 삭제되었습니다."
@@ -63,7 +64,7 @@ export class SurveyService{
         try{
             let survey = await this.surveyRepo.findOne({where:{id:updateSurveyArgs.id}});
             if(!survey){
-                throw new Error("찾을 수 없는 설문지입니다.");
+                throw new NotFoundException("찾을 수 없는 설문지입니다.");
             }
             survey.title = updateSurveyArgs.title;
             survey.description = updateSurveyArgs.description;

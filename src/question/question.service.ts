@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { AddQuestionArgs } from './args/addQuestion.args';
 import { UpdateQuestionArgs } from './args/updateQuestion.args';
 import { AddQuestionWithAnswers } from './args/addQuestionWithAnswer.args';
+import { NotFoundException } from '@nestjs/common/exceptions';
 
 
 @Injectable()
@@ -34,7 +35,7 @@ export class QuestionService{
                 relations:["survey","answers"],
             });
             if(!question){
-                throw new Error('존재하지 않은 id입니다.');
+                throw new NotFoundException('존재하지 않은 id입니다.');
             }
             return question;
         }catch(e){
@@ -46,7 +47,7 @@ export class QuestionService{
         try{
             let question = await this.questionRepo.findOne({where:{id:id}});
             if(!question){
-                throw new Error('존재하지 않은 id입니다.');
+                throw new NotFoundException('존재하지 않은 id입니다.');
             }
             await this.questionRepo.delete(id);
             return "해당 질문이 삭제되었습니다."
@@ -59,7 +60,7 @@ export class QuestionService{
         try{
             let survey = await this.surveyRepo.findOne({where:{id:addSurveyArgs.surveyId}});
             if(!survey){
-                throw new Error("존재하지 않은 설문지id 입니다.");
+                throw new NotFoundException("존재하지 않은 설문지id 입니다.");
             }
             let question = new QuestionEntity();
             question.question = addSurveyArgs.question;
@@ -76,7 +77,7 @@ export class QuestionService{
         try{
             let survey = await this.surveyRepo.findOne({where:{id:addQuestionWithAnswer.surveyId}});
             if(!survey){
-                throw new Error("존재하지 않은 설문지id 입니다.");
+                throw new NotFoundException("존재하지 않은 설문지id 입니다.");
             }
             
             let question = new QuestionEntity();
@@ -106,7 +107,7 @@ export class QuestionService{
         try{
             let question = await this.questionRepo.findOne({where:{id:updateQuestionArgs.id}});
             if(!question){
-                throw new Error("찾을 수 없는 질문입니다.");
+                throw new NotFoundException("찾을 수 없는 질문입니다.");
             }
             question.question = updateQuestionArgs.question;
 

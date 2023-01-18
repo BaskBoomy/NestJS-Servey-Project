@@ -63,6 +63,8 @@ export interface Survey {
     title: string;
     description: string;
     questions: Question[];
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export interface Question {
@@ -70,6 +72,8 @@ export interface Question {
     question: string;
     survey: Survey;
     answers: Answer[];
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export interface Answer {
@@ -77,17 +81,21 @@ export interface Answer {
     answer: string;
     score: number;
     question: Question;
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export interface User {
     id: number;
     name: string;
     phoneNumber: string;
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export interface UserResultAnswers {
     question: Question;
-    answer: Answer;
+    userAnswer: Answer[];
 }
 
 export interface UserAnswerResult {
@@ -95,6 +103,8 @@ export interface UserAnswerResult {
     survey: Survey;
     answers: UserResultAnswers[];
     totalScore: number;
+    createdAt: DateTime;
+    updatedAt: DateTime;
 }
 
 export interface IQuery {
@@ -105,7 +115,7 @@ export interface IQuery {
     QuestionById(surveyId: number): Question | Promise<Question>;
     Answers(): Answer[] | Promise<Answer[]>;
     AnswerById(answerId: number): Answer | Promise<Answer>;
-    UserAnswers(userId: number, surveyId: number): UserAnswerResult | Promise<UserAnswerResult>;
+    userAnswersById(userId: number, surveyId: number): UserAnswerResult | Promise<UserAnswerResult>;
 }
 
 export interface IMutation {
@@ -119,7 +129,8 @@ export interface IMutation {
     deleteAnswer(answerId: number): string | Promise<string>;
     addAnswer(addAnswerArgs: AddAnswerArgs): string | Promise<string>;
     updateAnswer(updateAnswerArgs: UpdateAnswerArgs): string | Promise<string>;
-    addUserAnswer(addUserAnswerArgs: AddUserAnswerArgs): string | Promise<string>;
+    submitSurvey(addUserAnswerArgs: AddUserAnswerArgs): string | Promise<string>;
 }
 
+export type DateTime = any;
 type Nullable<T> = T | null;

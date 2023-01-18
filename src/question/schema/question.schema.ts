@@ -15,4 +15,10 @@ export class Question{
 
     @Field(()=>[Answer])
     answers: Answer[];
+    
+    @Field(()=> Date)
+    createdAt : Date;
+
+    @Field(()=> Date)
+    updatedAt : Date;
 }

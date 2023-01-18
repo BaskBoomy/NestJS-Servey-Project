@@ -1,4 +1,4 @@
-import { Entity, OneToMany } from 'typeorm';
+import { CreateDateColumn, Entity, OneToMany, UpdateDateColumn } from 'typeorm';
 import { QuestionEntity } from './../../question/entity/question.entity';
 import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserAnswerEntity } from 'src/user/answer/entity/userAnswer.entity';
@@ -22,4 +22,10 @@ export class AnswerEntity{
     
     @OneToMany(()=> UserAnswerEntity, (userAnswer)=> userAnswer.answer, {cascade:true})
     userAnswers: UserAnswerEntity[];
+
+    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+    public createdAt: Date;
+
+    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+    public updatedAt: Date;
 }

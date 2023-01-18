@@ -9,8 +9,8 @@ export class UserResultAnswers{
     @Field((type)=> Question)
     question: Question;
 
-    @Field((type)=> Answer)
-    answer: Answer;
+    @Field((type)=> [Answer])
+    userAnswer: Answer[];
 }
 
 @ObjectType()
@@ -26,4 +26,10 @@ export class UserAnswerResult{
 
     @Field(()=> Int)
     totalScore: number;
+    
+    @Field(()=> Date)
+    createdAt : Date;
+
+    @Field(()=> Date)
+    updatedAt : Date;
 }

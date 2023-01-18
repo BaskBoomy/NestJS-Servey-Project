@@ -15,4 +15,10 @@ export class Answer{
 
     @Field(()=> Question)
     question: Question
+    
+    @Field(()=> Date)
+    createdAt : Date;
+
+    @Field(()=> Date)
+    updatedAt : Date;
 }

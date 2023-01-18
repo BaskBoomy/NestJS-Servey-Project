@@ -1,5 +1,5 @@
 import { QuestionEntity } from './../../question/entity/question.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { UserAnswerEntity } from 'src/user/answer/entity/userAnswer.entity';
 
 @Entity({name: "survey"})
@@ -18,4 +18,10 @@ export class SurveyEntity{
 
     @OneToMany(()=> UserAnswerEntity, (userAnswer)=> userAnswer.survey, {cascade:true})
     userAnswers: UserAnswerEntity[];
+
+    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+    public createdAt: Date;
+
+    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+    public updatedAt: Date;
 }

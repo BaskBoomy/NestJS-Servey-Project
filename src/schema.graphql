@@ -7,13 +7,22 @@ type Survey {
   title: String!
   description: String!
   questions: [Question!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Question {
   id: Int!
   question: String!
   survey: Survey!
   answers: [Answer!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Answer {
@@ -21,17 +30,21 @@ type Answer {
   answer: String!
   score: Int!
   question: Question!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type User {
   id: Int!
   name: String!
   phoneNumber: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserResultAnswers {
   question: Question!
-  answer: Answer!
+  userAnswer: [Answer!]!
 }
 
 type UserAnswerResult {
@@ -39,6 +52,8 @@ type UserAnswerResult {
   survey: Survey!
   answers: [UserResultAnswers!]!
   totalScore: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Query {
@@ -49,7 +64,7 @@ type Query {
   QuestionById(surveyId: Int!): Question!
   Answers: [Answer!]!
   AnswerById(answerId: Int!): Answer!
-  UserAnswers(userId: Int!, surveyId: Int!): UserAnswerResult!
+  userAnswersById(userId: Int!, surveyId: Int!): UserAnswerResult!
 }
 
 type Mutation {
@@ -63,7 +78,7 @@ type Mutation {
   deleteAnswer(answerId: Int!): String!
   addAnswer(addAnswerArgs: AddAnswerArgs!): String!
   updateAnswer(updateAnswerArgs: UpdateAnswerArgs!): String!
-  addUserAnswer(addUserAnswerArgs: AddUserAnswerArgs!): String!
+  submitSurvey(addUserAnswerArgs: AddUserAnswerArgs!): String!
 }
 
 input AddSurveyArgs {

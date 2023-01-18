@@ -14,4 +14,10 @@ export class Survey{
 
     @Field(()=> [Question])
     questions: Question[];
+    
+    @Field(()=> Date)
+    createdAt : Date;
+
+    @Field(()=> Date)
+    updatedAt : Date;
 }

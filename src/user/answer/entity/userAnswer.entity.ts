@@ -1,6 +1,6 @@
 import { AnswerEntity } from '../../../answer/entity/answer.entity';
 import { SurveyEntity } from '../../../survey/entity/survey.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { QuestionEntity } from 'src/question/entity/question.entity';
 import { UserEntity } from 'src/user/auth/entity/user.entity';
 
@@ -21,9 +21,21 @@ export class UserAnswerEntity{
     @ManyToOne(()=> SurveyEntity, (survey)=> survey.userAnswers)
     survey: SurveyEntity;
 
+    @Column()
+    questionId: number;
+
     @ManyToOne(()=> QuestionEntity, (question)=> question.userAnswers)
-    question: QuestionEntity | number;
+    question: QuestionEntity;
     
+    @Column()
+    answerId: number;
+
     @ManyToOne(()=> AnswerEntity, (answer)=> answer.userAnswers)
-    answer: AnswerEntity | number;
+    answer: AnswerEntity;
+
+    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+    public createdAt: Date;
+
+    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+    public updatedAt: Date;
 }
