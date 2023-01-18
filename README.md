@@ -26,7 +26,7 @@
 
 ## Table Design
 
-![survey diagram](https://user-images.githubusercontent.com/57517612/213120082-08bd1fb5-abb2-44f6-8535-b7b602559a2c.PNG)
+![survey diagram style2](https://user-images.githubusercontent.com/57517612/213162520-56d4f01a-f863-419f-8b6e-c70daf05beb4.PNG)
 
 ## Getting Started
 
