@@ -23,6 +23,17 @@ export class UserAnswerService{
 
     async findUserAnswerById(userId: number,surveyId: number): Promise<UserAnswerResult>{
         try{
+            let [user,survey] = await Promise.all([
+                await this.userRepo.findOne({where:{id:userId}}),
+                await this.userRepo.findOne({where:{id:surveyId}})
+            ]);
+            if(!user){
+                throw new NotFoundException('존재하지 않은 User 입니다.');
+            }
+            if(!survey){
+                throw new NotFoundException('존재하지 않은 Survey 입니다.');
+            }
+
             let userAnswer = await this.userAnswerRepo.find({
                 where:{
                     userId:userId,
@@ -34,12 +45,7 @@ export class UserAnswerService{
             if(!userAnswer){
                 throw new NotFoundException('존재하지 않은 정보입니다.');
             }
-            if(!userAnswer[0].user){
-                throw new NotFoundException('존재하지 않은 User 입니다.');
-            }
-            if(!userAnswer[0].survey){
-                throw new NotFoundException('존재하지 않은 Survey 입니다.');
-            }
+            
             
             let userSurveyResult = new UserAnswerResult();
             userSurveyResult.user = userAnswer[0].user as User;

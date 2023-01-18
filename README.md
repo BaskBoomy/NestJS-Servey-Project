@@ -45,21 +45,29 @@
    ```sh
    git clone https://github.com/BaskBoomy/NestJS-Servey-Project.git
    ```
-2. npm packages 설치
+2. 해당 repository로 이동
+   ```sh
+   cd NestJS-Servey-Project
+   ```
+3. npm packages 설치
+
    ```sh
    npm install
    ```
-3. Root 폴더에  `.env.dev` 파일 생성
 
-4. `.env.dev` 파일에 postgresql connection 값 입력
+4. Root 폴더에  `.env.dev` 파일 생성
 
-   ```js
+5. `.env.dev` 파일에 postgresql connection 값 입력
+
+   ```sh
    DB_HOST=
    DB_PORT=
    DB_USERNAME=
    DB_PASSWORD=
    DB_NAME=
    ```
+
+   ​	
 
 ### Usage Of APIS
 
