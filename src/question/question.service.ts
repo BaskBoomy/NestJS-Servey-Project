@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AddQuestionArgs } from './args/addQuestion.args';
 import { UpdateQuestionArgs } from './args/updateQuestion.args';
-import { AddQuestionWithAnswers } from './args/addQuestionWithAnswer.args';
+import { AddQuestionsWithAnswers } from './args/addQuestionWithAnswer.args';
 import { NotFoundException } from '@nestjs/common/exceptions';
 
 
@@ -73,30 +73,33 @@ export class QuestionService{
         }
     }
 
-    async addQuestionWithAnswers(addQuestionWithAnswer: AddQuestionWithAnswers): Promise<String>{
+    async addQuestionsWithAnswers(addQuestionWithAnswer: AddQuestionsWithAnswers): Promise<String>{
         try{
             let survey = await this.surveyRepo.findOne({where:{id:addQuestionWithAnswer.surveyId}});
             if(!survey){
                 throw new NotFoundException("존재하지 않은 설문지id 입니다.");
             }
             
-            let question = new QuestionEntity();
-            question.question = addQuestionWithAnswer.question;
-            question.survey = survey;
-            
-            const inserted = await this.questionRepo.save(question);
-            if(!inserted){
-                throw new Error('질문이 등록되지 않았습니다.');
+            for(const questionWithAnswers of addQuestionWithAnswer.questions){
+                let question = new QuestionEntity();
+                question.question = questionWithAnswers.question;
+                question.survey = survey;
+                
+                const inserted = await this.questionRepo.save(question);
+                if(!inserted){
+                    throw new Error('질문이 등록되지 않았습니다.');
+                }
+    
+                let answers : AnswerEntity[] = questionWithAnswers.answers.map(x=>{
+                    let item = new AnswerEntity();
+                    item.answer = x.answer;
+                    item.score = x.score;
+                    item.questionId = inserted.id;
+                    return item;
+                })
+                await this.answerRepo.save(answers);
             }
-
-            let answers : AnswerEntity[] = addQuestionWithAnswer.answers.map(x=>{
-                let item = new AnswerEntity();
-                item.answer = x.answer;
-                item.score = x.score;
-                item.questionId = inserted.id;
-                return item;
-            })
-            await this.answerRepo.save(answers);
+            
             return "질문이 등록되었습니다.";
         }catch(e){
             throw e;

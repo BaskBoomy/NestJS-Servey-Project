@@ -73,7 +73,7 @@ type Mutation {
   updateSurvey(updateSurveyArgs: UpdateSurveyArgs!): String!
   deleteQuestion(surveyId: Int!): String!
   addQuestion(addQuestionArgs: AddQuestionArgs!): String!
-  addQuestionWithAnswers(addQuestionWithAnsersArgs: AddQuestionWithAnswers!): String!
+  addQuestionsWithAnswers(addQuestionsWithAnsersArgs: AddQuestionsWithAnswers!): String!
   updateQuestion(updateQuestionArgs: UpdateQuestionArgs!): String!
   deleteAnswer(answerId: Int!): String!
   addAnswer(addAnswerArgs: AddAnswerArgs!): String!
@@ -97,8 +97,12 @@ input AddQuestionArgs {
   surveyId: Int!
 }
 
-input AddQuestionWithAnswers {
+input AddQuestionsWithAnswers {
   surveyId: Int!
+  questions: [Questions!]!
+}
+
+input Questions {
   question: String!
   answers: [AddAnswerArgs!]!
 }

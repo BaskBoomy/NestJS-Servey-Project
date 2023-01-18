@@ -7,113 +7,69 @@
 
   <h3 align="center">Survey-BackEnd-Project</h3>
 
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
-  </p>
-
-
-
-
-<!-- TABLE OF CONTENTS -->
-
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[ **객관식 설문지에 필요한 API 구현** ]
 
-객관식 설문지에 필요한 API
+- 설문지 모두 조회 / 특정 설문지 조회
+- 해당 설문지에 답안을 포함한 문항 추가
+- 설문지 제출 후, 설문지와 사용자가 체크한 답안과 총점 확인 가능
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-### Built With
+## Built With
 
 <img src="https://img.shields.io/badge/Nest.js-red?style=flat&logo=Nest.js&logoColor=white"/> <img src="https://img.shields.io/badge/TypeScript-blue?style=flat&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/typeorm-9cf?style=flat&logo=typeorm&logoColor=white"/> <img src="https://img.shields.io/badge/Graphql-pink?style=flat&logo=graphql&logoColor=white"/> <img src="https://img.shields.io/badge/postgresql-blue?style=flat&logo=postgresql&logoColor=white"/>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Table Design
+
+![survey.diagram](C:\Users\ADMIN\Desktop\survey.diagram.PNG)
 
 
-<!-- GETTING STARTED -->
+
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+1. [postgresql 설치](https://www.postgresql.org/download/)
+
+2. npm (version >= 8.19.2)
+
+   ```sh
+   npm install npm@latest -g
+   ```
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. repository 복제
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/BaskBoomy/NestJS-Servey-Project.git
    ```
-3. Install NPM packages
+2. npm packages 설치
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+3. Root 폴더에  `.env.dev` 파일 생성
+
+4. `.env.dev` 파일에 postgresql connection 값 입력
+
    ```js
-   const API_KEY = 'ENTER YOUR API';
+   DB_HOST=
+   DB_PORT=
+   DB_USERNAME=
+   DB_PASSWORD=
+   DB_NAME=
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Table Design
-
-
-
-###### 
-
 ### Usage Of APIS
 
-1. 설문지
+1. #### 설문지
 
    - **addSurvey** : 설문지의 제목과 설명을 입력하여 설문지를 추가한다.
 
@@ -210,39 +166,40 @@ _Below is an example of how you can instruct your audience on installing and set
 
 ​				[이하, 각 colum에 해당하는 데이터를 crud하는 작업은 동일하므로 생략]
 
-2. 질문
+2. #### 질문
 
-   - **addQuestionWithAnswers** :질문과 답안을 함께 추가할 경우
+   - **addQuestionsWithAnswers** : 질문들과 그에 해당하는 답안들을 함께 추가할 경우
 
-     - input : 설문지id, 질문 내용, 답안들
+     - input : 설문지id, 질문 내용들, 답안들
      - output : 질문 저장 성공 여부
 
-     참고) 답안만 추가할 경우 'addQuestion' mutaion 사용
+     참고) 질문만 추가할 경우 '**addQuestion**' mutaion 사용
 
      ```
-     mutation AddQuestionWithAnswers($args:AddQuestionWithAnswers!){
-       addQuestionWithAnswers(addQuestionWithAnsersArgs:$args)
+     mutation AddQuestionsWithAnswers($args:AddQuestionsWithAnswers!){
+       addQuestionsWithAnswers(addQuestionsWithAnsersArgs:$args)
      }
      ```
 
      ```
      {
        "args": {
-         "surveyId": <설문지id>,
-         "question": "<질문>",
-         "answers":[
-           {"answer": "<답안 ex)기간>","score":1},
-           {"answer": "<답안 ex)비용>","score":2},
-           {"answer": "<답안 ex)치안>","score":3},
-           {"answer": "<답안 ex)여행목적>","score":4},
-           {"answer": "<답안 ex)음식>","score":5},
-           {"answer": "<답안 ex)쇼핑>","score":6}
+         "surveyId": <설문지ID>,
+         "questions":[
+           {
+             "question": "<질문>",
+             "answers":[
+               {"answer": "<답변1>","score":<점수>},
+               ...
+             ]
+           },
+           ...
          ]
        }
      }
      ```
 
-3. 답안
+3. #### 답안
 
    - **addAnswer** : 답안 개별 추가
 
@@ -265,7 +222,7 @@ _Below is an example of how you can instruct your audience on installing and set
      }
      ```
 
-4. 설문지 완료
+4. #### 설문지 완료
 
    - **submitSurvey** : 설문지 제출
 
@@ -292,15 +249,39 @@ _Below is an example of how you can instruct your audience on installing and set
      }
      ```
 
-   - 
+   - **userAnswersById** : 제출한 설문지 확인
 
-
-
- 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
+     ```
+     {
+       userAnswersById(userId:<사용자id>,surveyId:<설문지id>){
+         user{
+           id
+           name
+           phoneNumber
+         }
+         survey{
+           id
+           title
+           description
+         }
+         answers{
+           question{
+             question
+             answers{
+               id
+               answer
+             }
+           }
+           userAnswer{
+             id
+             answer
+             score
+           }
+         }
+         totalScore
+       }
+     }
+     ```
 
 ## Contact
 
@@ -309,23 +290,3 @@ _Below is an example of how you can instruct your audience on installing and set
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-

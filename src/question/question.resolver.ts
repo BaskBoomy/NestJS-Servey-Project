@@ -3,7 +3,7 @@ import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { AddQuestionArgs } from "./args/addQuestion.args";
 import { QuestionService } from "./question.service";
 import { Question } from "./schema/question.schema";
-import { AddQuestionWithAnswers } from './args/addQuestionWithAnswer.args';
+import { AddQuestionsWithAnswers } from './args/addQuestionWithAnswer.args';
 
 @Resolver(()=> Question)
 export class QuestionResolver{
@@ -29,9 +29,9 @@ export class QuestionResolver{
         return this.questionService.addQuestion(question);
     }
 
-    @Mutation((returns => String), {name: 'addQuestionWithAnswers'})
-    addQuestionWithAnswers(@Args("addQuestionWithAnsersArgs") questionWithAnswers: AddQuestionWithAnswers){
-        return this.questionService.addQuestionWithAnswers(questionWithAnswers);
+    @Mutation((returns => String), {name: 'addQuestionsWithAnswers'})
+    addQuestionWithAnswers(@Args("addQuestionsWithAnsersArgs") questionWithAnswers: AddQuestionsWithAnswers){
+        return this.questionService.addQuestionsWithAnswers(questionWithAnswers);
     }
 
     @Mutation((returns => String), {name: 'updateQuestion'})

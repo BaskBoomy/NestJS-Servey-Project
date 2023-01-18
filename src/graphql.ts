@@ -24,8 +24,12 @@ export interface AddQuestionArgs {
     surveyId: number;
 }
 
-export interface AddQuestionWithAnswers {
+export interface AddQuestionsWithAnswers {
     surveyId: number;
+    questions: Questions[];
+}
+
+export interface Questions {
     question: string;
     answers: AddAnswerArgs[];
 }
@@ -124,7 +128,7 @@ export interface IMutation {
     updateSurvey(updateSurveyArgs: UpdateSurveyArgs): string | Promise<string>;
     deleteQuestion(surveyId: number): string | Promise<string>;
     addQuestion(addQuestionArgs: AddQuestionArgs): string | Promise<string>;
-    addQuestionWithAnswers(addQuestionWithAnsersArgs: AddQuestionWithAnswers): string | Promise<string>;
+    addQuestionsWithAnswers(addQuestionsWithAnsersArgs: AddQuestionsWithAnswers): string | Promise<string>;
     updateQuestion(updateQuestionArgs: UpdateQuestionArgs): string | Promise<string>;
     deleteAnswer(answerId: number): string | Promise<string>;
     addAnswer(addAnswerArgs: AddAnswerArgs): string | Promise<string>;
