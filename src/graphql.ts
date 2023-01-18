@@ -116,7 +116,7 @@ export interface IQuery {
     surveys(): Survey[] | Promise<Survey[]>;
     surveyById(surveyId: number): Survey | Promise<Survey>;
     Questions(): Question[] | Promise<Question[]>;
-    QuestionById(surveyId: number): Question | Promise<Question>;
+    QuestionById(questionId: number): Question | Promise<Question>;
     Answers(): Answer[] | Promise<Answer[]>;
     AnswerById(answerId: number): Answer | Promise<Answer>;
     userAnswersById(userId: number, surveyId: number): UserAnswerResult | Promise<UserAnswerResult>;
@@ -126,7 +126,7 @@ export interface IMutation {
     deleteSurvey(surveyId: number): string | Promise<string>;
     addSurvey(addSurveyArgs: AddSurveyArgs): string | Promise<string>;
     updateSurvey(updateSurveyArgs: UpdateSurveyArgs): string | Promise<string>;
-    deleteQuestion(surveyId: number): string | Promise<string>;
+    deleteQuestion(questionId: number): string | Promise<string>;
     addQuestion(addQuestionArgs: AddQuestionArgs): string | Promise<string>;
     addQuestionsWithAnswers(addQuestionsWithAnsersArgs: AddQuestionsWithAnswers): string | Promise<string>;
     updateQuestion(updateQuestionArgs: UpdateQuestionArgs): string | Promise<string>;

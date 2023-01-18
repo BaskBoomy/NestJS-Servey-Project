@@ -15,11 +15,26 @@ export class UserAnswerResolver{
     getUserAnswersById(
         @Args({name:"userId", type:()=>Int}) userId: number,
         @Args({name:"surveyId", type:()=>Int}) surveyId: number ){
+            if(!userId){
+                throw new Error("사용자 id가 입력되지 않았습니다.");
+            }
+            if(!surveyId){
+                throw new Error("설문지 id가 입력되지 않았습니다.");
+            }
         return this.userAnswerService.findUserAnswerById(userId, surveyId);
     }
 
     @Mutation((returns => String), {name: 'submitSurvey'})
     submitSurvey(@Args("addUserAnswerArgs") addUserAnswer: AddUserAnswerArgs){
+        if(!addUserAnswer.userId){
+            throw new Error("사용자 id가 입력되지 않았습니다.");
+        }
+        if(!addUserAnswer.surveyId){
+            throw new Error("설문지 id가 입력되지 않았습니다.");
+        }
+        if(addUserAnswer.answers.length === 0){
+            throw new Error("답변이 입력되지 않았습니다.");
+        }
         return this.userAnswerService.addUserAnswer(addUserAnswer);
     }
 }

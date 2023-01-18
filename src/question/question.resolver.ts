@@ -15,27 +15,51 @@ export class QuestionResolver{
     }
     
     @Query((returns => Question), {name: 'QuestionById'})
-    getQuestionById(@Args({name:'surveyId', type:()=>Int}) id:number){
+    getQuestionById(@Args({name:'questionId', type:()=>Int}) id:number){
+        if(!id){
+            throw new Error("질문 id가 입력되지 않았습니다.")
+        }
         return this.questionService.findQuestionById(id);
     }
 
     @Mutation((returns => String), {name: 'deleteQuestion'})
-    deleteQuestion(@Args({name:'surveyId', type:()=>Int}) id:number){
+    deleteQuestion(@Args({name:'questionId', type:()=>Int}) id:number){
+        if(!id){
+            throw new Error("질문 id가 입력되지 않았습니다.")
+        }
         return this.questionService.deleteQuestion(id);
     }
 
     @Mutation((returns => String), {name: 'addQuestion'})
     addQuestion(@Args("addQuestionArgs") question: AddQuestionArgs){
+        if(!question.surveyId){
+            throw new Error("설문지 id가 입력되지 않았습니다.")
+        }
+        if(!question.question){
+            throw new Error("질문이 입력되지 않았습니다.")
+        }
         return this.questionService.addQuestion(question);
     }
 
     @Mutation((returns => String), {name: 'addQuestionsWithAnswers'})
-    addQuestionWithAnswers(@Args("addQuestionsWithAnsersArgs") questionWithAnswers: AddQuestionsWithAnswers){
-        return this.questionService.addQuestionsWithAnswers(questionWithAnswers);
+    addQuestionWithAnswers(@Args("addQuestionsWithAnsersArgs") questionsWithAnswers: AddQuestionsWithAnswers){
+        if(!questionsWithAnswers.surveyId){
+            throw new Error("설문지 id가 입력되지 않았습니다.")
+        }
+        if(questionsWithAnswers.questions.length === 0){
+            throw new Error("질문이 입력되지 않았습니다.")
+        }
+        return this.questionService.addQuestionsWithAnswers(questionsWithAnswers);
     }
 
     @Mutation((returns => String), {name: 'updateQuestion'})
-    upadteQuestion(@Args("updateQuestionArgs") Question: UpdateQuestionArgs){
-        return this.questionService.upadteQuestion(Question);
+    upadteQuestion(@Args("updateQuestionArgs") question: UpdateQuestionArgs){
+        if(!question.id){
+            throw new Error("질문 id가 입력되지 않았습니다.")
+        }
+        if(!question.question){
+            throw new Error("질문이 입력되지 않았습니다.")
+        }
+        return this.questionService.upadteQuestion(question);
     }
 }

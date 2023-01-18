@@ -66,9 +66,6 @@ export class SurveyService{
             if(!survey){
                 throw new NotFoundException("찾을 수 없는 설문지입니다.");
             }
-            survey.title = updateSurveyArgs.title;
-            survey.description = updateSurveyArgs.description;
-            
             await this.surveyRepo.update({id:updateSurveyArgs.id},survey);
             return "설문지가 수정 되었습니다.";
         }catch(e){

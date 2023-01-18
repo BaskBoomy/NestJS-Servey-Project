@@ -13,13 +13,13 @@ export class QuestionEntity{
     @Column()
     question: string;
 
-    @ManyToOne(() => SurveyEntity, (survey)=> survey.questions)
+    @ManyToOne(() => SurveyEntity, (survey)=> survey.questions, {onDelete:"CASCADE"})
     survey: SurveyEntity;
 
     @OneToMany(() => AnswerEntity, (answer)=> answer.question)
     answers: AnswerEntity[];
 
-    @OneToMany(()=> UserAnswerEntity, (userAnswer)=> userAnswer.question, {cascade:true})
+    @OneToMany(()=> UserAnswerEntity, (userAnswer)=> userAnswer.question)
     userAnswers: UserAnswerEntity[];
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })

@@ -4,11 +4,10 @@
 <div align="center">
   <img src="https://cdn-icons-png.flaticon.com/512/5810/5810357.png" title="survey icons"  width="200" height="200" style="margin-left:50px"">
 </div>
-
-  <h3 align="center">Survey-BackEnd-Project</h3>
-
+  <h3 align="center">[BackEnd Project] Survey with NestJS</h3>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 [ **객관식 설문지에 필요한 API 구현** ]
@@ -22,6 +21,8 @@
 ## Built With
 
 <img src="https://img.shields.io/badge/Nest.js-red?style=flat&logo=Nest.js&logoColor=white"/> <img src="https://img.shields.io/badge/TypeScript-blue?style=flat&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/typeorm-9cf?style=flat&logo=typeorm&logoColor=white"/> <img src="https://img.shields.io/badge/Graphql-pink?style=flat&logo=graphql&logoColor=white"/> <img src="https://img.shields.io/badge/postgresql-blue?style=flat&logo=postgresql&logoColor=white"/>
+
+
 
 ## Table Design
 
@@ -39,7 +40,7 @@
    npm install npm@latest -g
    ```
 
-### Installation
+### Installation & Start
 
 1. repository 복제
    ```sh
@@ -57,7 +58,7 @@
 
 4. Root 폴더에  `.env.dev` 파일 생성
 
-5. `.env.dev` 파일에 postgresql connection 값 입력
+5. `.env.dev` 파일에 postgresql connection에 필요한 데이터 입력
 
    ```sh
    DB_HOST=
@@ -67,7 +68,20 @@
    DB_NAME=
    ```
 
-   ​	
+ 6. 실행
+
+    ```sh
+    npm run start
+    npm run start:dev //watch-mode
+    ```
+
+7. grapqhql
+
+   ```
+   http://localhost:4000/graphql
+   ```
+
+   
 
 ### Usage Of APIS
 
@@ -85,7 +99,7 @@
      {
        "args": {
          "title": "<설문지 제목>",
-         "description": "<설문지에 대한 설명을 입력해주시기 바랍니다.>" 
+         "description": "<설문지에 대한 설명 입력>" 
        }
      }
      ```
@@ -152,7 +166,7 @@
 
      ```
      mutation UpdateSurvey($args: UpdateSurveyArgs!) {
-       updateSurvey(updateSurveyArgs: $updateSurveyArgs)
+       updateSurvey(updateSurveyArgs: $args)
      }
      ```
 
@@ -168,7 +182,7 @@
 
 		
 
-2. #### 질문
+2. #### 질문(Questions)
 
    - **[addQuestionsWithAnswers](https://github.com/BaskBoomy/NestJS-Servey-Project/blob/39d6a4d3adc014656da332efe5d484c9bef9ecb2/src/question/question.service.ts#L76-L107)** : 질문들과 그에 해당하는 답안들을 함께 추가할 경우
 
@@ -201,7 +215,7 @@
      }
      ```
 
-3. #### 답안
+3. #### 답안(Answers)
 
    - **[addAnswer](https://github.com/BaskBoomy/NestJS-Servey-Project/blob/39d6a4d3adc014656da332efe5d484c9bef9ecb2/src/answer/answer.service.ts#L52-L68)** : 답안 개별 추가
 
@@ -210,7 +224,7 @@
 
      ```
      mutation AddAnswer($args: AddAnswerArgs!){
-       addAnswer(addAnswerArgs:$arg)
+       addAnswer(addAnswerArgs:$args)
      }
      ```
 
@@ -224,7 +238,7 @@
      }
      ```
 
-4. #### 설문지 완료
+4. #### 설문지 완료(Submit)
 
    - **[submitSurvey](https://github.com/BaskBoomy/NestJS-Servey-Project/blob/39d6a4d3adc014656da332efe5d484c9bef9ecb2/src/user/answer/userAnswer.service.ts#L78-L108)** : 설문지 제출
 
@@ -285,8 +299,10 @@
      }
      ```
 
+
+
 ## Contact
 
 최종혁 - [Notion](https://www.notion.so/jonghyeok-choi/5ca12bf9fb134fa5a5a90a51526bbde0)  [E-mail](whdgurtpqms@naver.com)
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/BaskBoomy/NestJS-Servey-Project](https://github.com/your_username/repo_name)

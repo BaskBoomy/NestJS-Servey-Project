@@ -17,10 +17,10 @@ export class AnswerEntity{
     @Column()
     questionId: number;
 
-    @ManyToOne(()=> QuestionEntity, (question)=> question.answers)
+    @ManyToOne(()=> QuestionEntity, (question)=> question.answers,{onDelete:"CASCADE"})
     question: QuestionEntity
     
-    @OneToMany(()=> UserAnswerEntity, (userAnswer)=> userAnswer.answer, {cascade:true})
+    @OneToMany(()=> UserAnswerEntity, (userAnswer)=> userAnswer.answer)
     userAnswers: UserAnswerEntity[];
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })

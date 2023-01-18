@@ -61,7 +61,7 @@ type Query {
   surveys: [Survey!]!
   surveyById(surveyId: Int!): Survey!
   Questions: [Question!]!
-  QuestionById(surveyId: Int!): Question!
+  QuestionById(questionId: Int!): Question!
   Answers: [Answer!]!
   AnswerById(answerId: Int!): Answer!
   userAnswersById(userId: Int!, surveyId: Int!): UserAnswerResult!
@@ -71,7 +71,7 @@ type Mutation {
   deleteSurvey(surveyId: Int!): String!
   addSurvey(addSurveyArgs: AddSurveyArgs!): String!
   updateSurvey(updateSurveyArgs: UpdateSurveyArgs!): String!
-  deleteQuestion(surveyId: Int!): String!
+  deleteQuestion(questionId: Int!): String!
   addQuestion(addQuestionArgs: AddQuestionArgs!): String!
   addQuestionsWithAnswers(addQuestionsWithAnsersArgs: AddQuestionsWithAnswers!): String!
   updateQuestion(updateQuestionArgs: UpdateQuestionArgs!): String!
