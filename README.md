@@ -26,7 +26,7 @@
 
 ## Table Design
 
-![survey diagram](https://user-images.githubusercontent.com/57517612/213120082-08bd1fb5-abb2-44f6-8535-b7b602559a2c.PNG)
+![survey diagram](https://user-images.githubusercontent.com/57517612/213162520-56d4f01a-f863-419f-8b6e-c70daf05beb4.PNG)
 
 ## Getting Started
 
@@ -58,32 +58,43 @@
    npm install
    ```
 
-4. Root 폴더에  `.env.dev` 파일 생성
+4. postgres database 생성
 
-5. `.env.dev` 파일에 postgresql connection에 필요한 데이터 입력
-
-   ```sh
-   DB_HOST=
-   DB_PORT=
-   DB_USERNAME=
-   DB_PASSWORD=
-   DB_NAME=
+   ```sql
+   CREATE DATABASE survey_db;
    ```
 
- 6. 실행
+   > ###### pgadmin backup file : 테스트용 데이터가 필요할 경우 [여기](https://drive.google.com/file/d/1-ITeinkV0cx7cafTQYttaYCtRWxzHko7/view?usp=sharing)에서 backup파일을 다운로드
+   >
+   > `pgadmin 열기 -> survey_db 오른쪽 마우스 클릭 -> Restore -> Filename에 다운로드한 파일 추가 -> Restore버튼 클릭`
+
+5. Root 폴더에  `.env.dev` 파일 생성
+
+6. `.env.dev` 파일에 postgresql connection에 필요한 데이터 입력
+
+   ```sh
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_USERNAME=
+   DB_PASSWORD=
+   DB_NAME=survey_db
+   ```
+
+ 7. 실행
 
     ```sh
     npm run start
     npm run start:dev //watch-mode
     ```
 
-7. grapqhql
+8. grapqhql
 
    ```
    http://localhost:4000/graphql
    ```
 
-   
+
+
 
 ### Usage Of APIS
 
